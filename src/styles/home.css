@@ -1,0 +1,16 @@
+.home {
+  background-color: #554CE1;
+  padding: 40px;
+
+  border-top-left-radius: 10px;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 10px;
+
+  text-align: center;
+}
+
+.home h1 {
+  color: white;
+  padding-bottom: 20px;
+}

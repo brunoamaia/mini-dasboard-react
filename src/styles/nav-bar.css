@@ -1,0 +1,46 @@
+aside {
+  position: relative;
+  width: 80px;
+  height: calc(100vh - 80px);
+  background: linear-gradient(45deg, #3B32C0 0%, #6D63FF 100%);
+  border-radius: 30px;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 20px 0;
+}
+
+nav img {
+  height: 30px;
+  width: 30px;
+  margin: 5px 0;
+}
+
+nav button {
+  background-color: inherit;
+  border: 1px solid transparent;
+  padding: 1px 5px;
+  cursor: pointer;
+}
+
+ button.active {
+  background-color: #3B32C0;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+ }
+
+.separator {
+  width: 80%;
+  height: 2px;
+  background-color: white;
+  margin: 8px auto;
+}
+
+.helper {
+  position: absolute;
+  bottom: 20px;
+}
