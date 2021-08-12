@@ -78,13 +78,13 @@ export class Frame extends React.Component<MyProps, MyState> {
 
   handleupdateSportValue(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const nValue = parseFloat(this.state.newValue)
+    const nValue = parseFloat(this.state.newValue) | 0
     const newPercent = Math.round(nValue / this.state.values.target * 100)
 
-    this.setState({
+    this.setState((state) => ({
       percent: newPercent,
-      value: parseFloat(this.state.newValue) | 0,
-    })
+      value: parseFloat(state.newValue) | 0,
+    }))
   }
 
   handleChangeValue(newValue: string) {
