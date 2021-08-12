@@ -9,49 +9,64 @@ import Steps from '../../img/steps.svg'
 
 import '../../styles/nav-bar.css'
 
-export function NavBar() {
-  const actualPage = 'home'
-  function handleChangeToContent(content: string) {
+interface MyProps {
+}
+interface MyState {
+  actualPage: string;
+}
+
+export class NavBar extends React.Component<MyProps, MyState> {
+
+  constructor(props: MyProps) {
+    super(props)
+    this.state = {
+      actualPage: 'home'
+    }
+  }
+
+  handleChangeToContent(content: string) {
     console.log(content);
   }
 
-  return (
-    <aside>
-      <nav>
-        <button>
-          <img src={Bell} alt="ligar alerta" />
-        </button>
+  render() {
+    return (
+      <aside>
+        <nav>
+          <button>
+            <img src={Bell} alt="ligar alerta" />
+          </button>
 
-        <div className="separator" />
+          <div className="separator" />
 
-        <button
-          className={actualPage === 'home' ? 'active' : ''}
-          onClick={() => handleChangeToContent('home')}
-        >
-          <img src={Home} alt="ir para o início" />
-        </button>
-        <button
-          // className={actualPage === 'cycling' ? 'active' : ''}
-          onClick={() => handleChangeToContent('cycling')}
-        >
-          <img src={Cycling} alt="ciclismo" />
-        </button>
-        <button
-          // className={actualPage === 'running' ? 'active' : ''}
-          onClick={() => handleChangeToContent('running')}
-        >
-          <img src={Running} alt="corrida" />
-        </button>
-        <button
-          // className={actualPage === 'steps' ? 'active' : ''}
-          onClick={() => handleChangeToContent('steps')}
-        >
-          <img src={Steps} alt="passos dados" />
-        </button>
-        <button className="helper">
-          <img src={Help} alt="ajuda" />
-        </button>
-      </nav>
-    </aside>
-  )
+          <button
+            className={this.state.actualPage === 'home' ? 'active' : ''}
+            onClick={() => this.handleChangeToContent('home')}
+          >
+            <img src={Home} alt="ir para o início" />
+          </button>
+          <button
+            className={this.state.actualPage === 'cycling' ? 'active' : ''}
+            onClick={() => this.handleChangeToContent('cycling')}
+          >
+            <img src={Cycling} alt="ciclismo" />
+          </button>
+          <button
+            className={this.state.actualPage === 'running' ? 'active' : ''}
+            onClick={() => this.handleChangeToContent('running')}
+          >
+            <img src={Running} alt="corrida" />
+          </button>
+          <button
+            className={this.state.actualPage === 'steps' ? 'active' : ''}
+            onClick={() => this.handleChangeToContent('steps')}
+          >
+            <img src={Steps} alt="passos dados" />
+          </button>
+          <button className="helper">
+            <img src={Help} alt="ajuda" />
+          </button>
+        </nav>
+      </aside>
+    )
+  }
 }

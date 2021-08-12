@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent } from 'react';
 
 import Cycling from '../../../img/cycling.svg';
 import Running from '../../../img/running.svg';
@@ -6,86 +6,135 @@ import Steps from '../../../img/steps.svg';
 
 import '../../../styles/frame.css';
 
-interface FrameProps {
-  sportName: string
+interface MyProps {
+  sportName: string;
+}
+interface MyState {
+  values: {
+    name: string,
+    target: number,
+    unit: string
+  },
+  newValue: string,
+  percent: number,
+  target: number,
+  value: number,
 }
 
-export function Frame({ sportName }: FrameProps) {
-  const values = {
-    logo: '',
-    name: '',
-    progress: 0,
-    target: 0,
-    unit: ''
-  }
-  if (sportName === 'cycling') {
-    values.logo = Cycling;
-    values.name = 'Cycling Hero';
-    values.progress = 55
-    values.target = 50
-    values.unit = 'km/week'
-  } else if (sportName === 'running') {
-    values.logo = Running;
-    values.name = 'Daily Running';
-    values.progress = 75
-    values.target = 7
-    values.unit = 'km/week'
-  } else if (sportName === 'steps') {
-    values.logo = Steps;
-    values.name = 'Daily Steps';
-    values.progress = 95
-    values.target = 12000
-    values.unit = 'steps/week'
+export class Frame extends React.Component<MyProps, MyState> {
+
+  constructor(props: MyProps) {
+    super(props)
+    this.state = {
+      values: {
+        name: '',
+        target: 0,
+        unit: ''
+      },
+      newValue: '0',
+      percent: 0,
+      target: 0,
+      value: 0
+    }
+    this.handleupdateSportValue = this.handleupdateSportValue.bind(this);
   }
 
-  const [porcent, setPporcent] = useState(values.progress) 
-  const [value, setValue] = useState('0')
+  componentDidMount() {
+    if (this.props.sportName === 'cycling') {
+      this.setState({
+        values: {
+          name: 'Cycling Hero',
+          target: 50,
+          unit: 'km/week'
+        },
+        newValue: '27.5',
+        percent: Math.round(27.5 / 50 * 100),
+        value: 55
+      })
+    } else if (this.props.sportName === 'running') {
+      this.setState({
+        values: {
+          name: 'Daily Running',
+          target: 7,
+          unit: 'km/week'
+        },
+        newValue: '5.75',
+        percent: Math.round(5.75 / 7 * 100),
+        value: 5.75
+      })
+    } else if (this.props.sportName === 'steps') {
+      this.setState({
+        values: {
+          name: 'Daily Steps',
+          target: 12000,
+          unit: 'steps/week'
+        },
+        newValue: '11400',
+        percent: Math.round(11400 / 12000 * 100),
+        value: 11400
+      })
+    }
+  }
 
-  function handleupdateSportValue(event: FormEvent<HTMLFormElement>) {
+  handleupdateSportValue(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(parseFloat(value) | 0)
-    setPporcent(parseFloat(value) | 0)
+    const nValue = parseFloat(this.state.newValue)
+    const newPercent = Math.round(nValue / this.state.values.target * 100)
+
+    this.setState({
+      percent: newPercent,
+      value: parseFloat(this.state.newValue) | 0,
+    })
   }
 
-  function handleChangeValue(newValue: string) {
-    setValue(newValue)
+  handleChangeValue(newValue: string) {
+    this.setState({
+      newValue: newValue,
+    })
   }
 
-  return (
-    <div className="frame">
-      <div className="sport">
-        <img src={values.logo} alt="" />
-      </div>
-      <div className="data">
-        <div>
-          <h2>{values.name}</h2>
+  render() {
+    return (
+      <div className="frame">
+        <div className="sport">
+          {this.props.sportName === 'cycling' && <img src={Cycling} alt="" />}
+          {this.props.sportName === 'running' && <img src={Running} alt="" />}
+          {this.props.sportName === 'steps' && <img src={Steps} alt="" />}
+        </div>
+        <div className="data">
+          <div>
+            <h2>{this.state.values.name}</h2>
 
-          <div className="value">
-            <form onSubmit={handleupdateSportValue}>
-              <label>Value:
-                <input
-                  type="text"
-                  name="value"
-                  value={value}
-                  onChange={event => { handleChangeValue(event.target.value) }}
+            <div className="value">
+              <form onSubmit={this.handleupdateSportValue}>
+                <label>Value:
+                  <input
+                    type="text"
+                    name="value"
+                    value={this.state.newValue}
+                    onChange={event => { this.handleChangeValue(event.target.value) }}
+                  />
+                </label>
+                <button type="submit">update</button>
+              </form>
+            </div>
+
+            <div className="progress">
+              <div className="progress-value">
+                <p>Progress: </p>
+                <p>{this.state.percent}%</p>
+              </div>
+              <div className="progress-bar">
+                <div
+                  className="progression"
+                  style={{ width: `${this.state.percent}%` }}
                 />
-              </label>
-              <button type="submit">update</button>
-            </form>
-          </div>
-
-          <div className="progress">
-            <div className="progress-value">
-              <p>Progress: </p>
-              <p>{porcent}%</p>
+              </div>
             </div>
-            <div className="progress-bar">
-              <div className="progression" style={{ width: `${porcent}%` }}></div>
-            </div>
+            <p>Target: {this.state.values.target} {this.state.values.unit}</p>
           </div>
-          <p>Target: {values.target} {values.unit}</p>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }

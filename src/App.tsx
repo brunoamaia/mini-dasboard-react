@@ -5,15 +5,15 @@ import { NavBar } from './components/NavBar'
 
 import './styles/app.css'
 
-function App() {
-  return (
-    <div className="App">
+class App extends React.Component {
+  render() {
+    return (
       <main>
         <NavBar />
         <Content />
       </main>
-    </div>
-  );
+    )
+  }
 }
 
 export default App;
