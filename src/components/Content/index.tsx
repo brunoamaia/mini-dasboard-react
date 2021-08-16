@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { Frame } from './Frame'
+import Frame from './Frame'
 import { Home } from './Home'
 
 import '../../styles/content.css'
